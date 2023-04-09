@@ -1,5 +1,7 @@
-package com.example.taskmanagerproject.entity;
+package com.example.taskmanagerproject.entity.task_user;
 
+import com.example.taskmanagerproject.entity.task.Task;
+import com.example.taskmanagerproject.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,8 +1,10 @@
-package com.example.taskmanagerproject.entity;
+package com.example.taskmanagerproject.entity.user;
 
+import com.example.taskmanagerproject.entity.task_user.TaskUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -14,10 +16,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username",nullable = false,unique = true)
+    @Column(name = "username",nullable = false,unique = true, length = 500)
     private String username;
 
-    @Column(name = "full_name",length = 500)
+    @Column(name = "full_name")
     private String name;
 
     @Column(name = "password",nullable = false,length = 500)
@@ -26,6 +28,9 @@ public class User {
     @Column(name = "photo_path", length = 500)
     private String pathPhoto;
 
+    @Column(name = "date_create")
+    private LocalDateTime timeCreateAccount;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -33,5 +38,10 @@ public class User {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<TaskUser> userList;
+
+    @PrePersist
+    public void initDateCreateUser(){
+        timeCreateAccount = LocalDateTime.now();
+    }
 
 }
