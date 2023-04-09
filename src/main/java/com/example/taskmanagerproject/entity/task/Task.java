@@ -1,5 +1,6 @@
-package com.example.taskmanagerproject.entity;
+package com.example.taskmanagerproject.entity.task;
 
+import com.example.taskmanagerproject.entity.task_user.TaskUser;
 import jakarta.persistence.*;
 import lombok.Data;
 

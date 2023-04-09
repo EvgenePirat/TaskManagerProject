@@ -1,4 +1,4 @@
-package com.example.taskmanagerproject.entity;
+package com.example.taskmanagerproject.entity.task_user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
