@@ -28,7 +28,7 @@ public class TaskServiceImpl implements TaskService {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Task> getAllByUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
         List<TaskUser> userList = user.getUserList();
@@ -42,7 +42,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional(readOnly = true)
     public Task getById(Long taskId) {
-        return taskRepository.findById(taskId).get();
+        return taskRepository.findById(taskId)
+                .orElseThrow(()->new ResourcesNotFoundException("Task not found!"));
     }
 
     @Override
@@ -55,6 +56,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public Task update(Task task) {
+        taskRepository.findById(task.getId()).orElseThrow(()->new ResourcesNotFoundException("Task for update not found"));
         return taskRepository.save(task);
     }
 
@@ -62,7 +64,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task create(Task task, Long id) {
         task = taskRepository.save(task);
-        TaskUser taskUser = new TaskUser(new TaskUserKey(id,task.getId()),userRepository.findById(id).get(),task);
+        TaskUser taskUser = new TaskUser(new TaskUserKey(id,task.getId()),userRepository.findById(id).orElseThrow(()->new ResourcesNotFoundException("User not found!")),task);
         tasksUserRepository.save(taskUser);
         return task;
     }
