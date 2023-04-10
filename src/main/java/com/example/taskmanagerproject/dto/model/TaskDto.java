@@ -2,6 +2,8 @@ package com.example.taskmanagerproject.dto.model;
 
 import com.example.taskmanagerproject.dto.validation.OnCreate;
 import com.example.taskmanagerproject.dto.validation.OnUpdate;
+import com.example.taskmanagerproject.entity.task.LevelPriority;
+import com.example.taskmanagerproject.entity.task.Status;
 import com.example.taskmanagerproject.entity.task.Task;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
@@ -29,17 +31,14 @@ public class TaskDto {
     private String description;
 
     @NotNull(message = "Level priority must be not null!", groups = {OnCreate.class, OnUpdate.class})
-    private String levelPriority;
+    private LevelPriority levelPriority;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH-mm")
     @Future(message = "Date must be future than date now!", groups = OnCreate.class)
+    @NotNull(message = "Date must be not null", groups = OnCreate.class)
     private LocalDateTime dateFinishedTask;
 
-    @NotNull(message = "Status must be not null!", groups = OnCreate.class)
-    private String status;
-
-    public static TaskDto changeTaskToTaskDro(Task task){
-        return new TaskDto(task.getId(),task.getTitle(),task.getDescription(),task.getLevelPriority().name(),task.getDateFinishedTask(),task.getStatus().name());
-    }
+    @NotNull(message = "Status must be not null!", groups = {OnCreate.class, OnUpdate.class})
+    private Status status;
 }
