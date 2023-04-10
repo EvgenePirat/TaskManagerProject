@@ -12,6 +12,17 @@ import java.util.List;
 @Data
 public class Task {
 
+    public Task() {}
+
+    public Task(Long id, String title, String description, String levelPriority, LocalDateTime dateFinishedTask, String status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.levelPriority = levelPriority;
+        this.dateFinishedTask = dateFinishedTask;
+        this.status = status;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,15 +33,16 @@ public class Task {
     @Column(name = "description",length = 800)
     private String description;
 
-    @Column(name = "level_priority", nullable = false,columnDefinition = "VARCHAR(255)")
-    private LevelPriority levelPriority;
+    @Column(name = "level_priority", nullable = false)
+    private String levelPriority;
 
     @Column(name = "finished_date", nullable = false)
     private LocalDateTime dateFinishedTask;
 
-    @Column(name = "status", nullable = false,columnDefinition = "VARCHAR(255)")
-    private Status status;
+    @Column(name = "status", nullable = false)
+    private String status;
 
-    @OneToMany(mappedBy = "task")
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
     private List<TaskUser> userList;
+
 }
