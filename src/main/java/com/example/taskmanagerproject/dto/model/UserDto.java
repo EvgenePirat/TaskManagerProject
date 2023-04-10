@@ -47,10 +47,9 @@ public class UserDto {
     @Length(max = 500, message = "Password must be smaller than 500 symbols", groups = {OnCreate.class, OnUpdate.class})
     private String password;
 
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private MultipartFile photo;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pathPhoto;
 
     private List<TaskUser> userList;

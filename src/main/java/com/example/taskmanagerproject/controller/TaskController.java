@@ -18,8 +18,8 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping("/{id}")
-    public TaskDto getById(@PathVariable Long taskId){
-        Task task = taskService.getById(taskId);
+    public TaskDto getById(@PathVariable Long id){
+        Task task = taskService.getById(id);
         return TaskMapper.changeTaskToTaskDro(task);
     }
 

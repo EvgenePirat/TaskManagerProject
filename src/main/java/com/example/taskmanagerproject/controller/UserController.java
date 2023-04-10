@@ -12,6 +12,7 @@ import com.example.taskmanagerproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,6 +26,11 @@ public class UserController {
 
     private final TaskService taskService;
 
+
+    @PutMapping("/{id}")
+    public String savePhotoForUser(@PathVariable Long id, @RequestParam("image") MultipartFile photo){
+        return userService.savePhotoInUser(photo,id);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id){
