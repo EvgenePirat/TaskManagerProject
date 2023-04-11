@@ -3,6 +3,7 @@ package com.example.taskmanagerproject.security.jwt;
 import com.example.taskmanagerproject.dto.auth.JwtResponse;
 import com.example.taskmanagerproject.entity.user.Role;
 import com.example.taskmanagerproject.entity.user.User;
+import com.example.taskmanagerproject.exception.AccessDeniedException;
 import com.example.taskmanagerproject.service.UserService;
 import com.example.taskmanagerproject.service.props.JwtProperties;
 import io.jsonwebtoken.Claims;
@@ -11,7 +12,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -70,7 +70,7 @@ public class JwtTokenProvider {
     public JwtResponse refreshUserToken(String refreshToken){
         JwtResponse jwtResponse = new JwtResponse();
         if(!validateToken(refreshToken)){
-            throw new AccessDeniedException("Exception!");
+            throw new AccessDeniedException("Error after validation token!");
         }
         Long userId = Long.valueOf(getId(refreshToken));
         User user = userService.getById(userId);
