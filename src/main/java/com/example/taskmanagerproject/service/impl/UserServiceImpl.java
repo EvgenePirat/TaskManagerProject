@@ -5,6 +5,7 @@ import com.example.taskmanagerproject.exception.ResourcesNotFoundException;
 import com.example.taskmanagerproject.repository.UserRepository;
 import com.example.taskmanagerproject.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,8 @@ import java.nio.file.Paths;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -74,6 +77,7 @@ public class UserServiceImpl implements UserService {
         if(userFromDb != null){
             throw new IllegalStateException("User already exist!");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 }
