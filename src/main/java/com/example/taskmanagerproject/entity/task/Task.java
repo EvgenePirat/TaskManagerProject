@@ -42,7 +42,7 @@ public class Task {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<TaskUser> userList;
 
 }

@@ -49,7 +49,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TaskUser> userList;
 
     @PrePersist
