@@ -1,5 +1,7 @@
 package com.example.taskmanagerproject.service.impl;
 
+import com.example.taskmanagerproject.entity.task_user.TaskUser;
+import com.example.taskmanagerproject.entity.task_user.TaskUserKey;
 import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.exception.ResourcesNotFoundException;
 import com.example.taskmanagerproject.repository.UserRepository;
@@ -26,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User update(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
@@ -79,5 +81,12 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public boolean isTaskOwner(Long userId, Long taskId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
+        return user.getUserList().stream().map(TaskUser::getId).map(TaskUserKey::getTaskId).anyMatch((id)->id == taskId);
     }
 }

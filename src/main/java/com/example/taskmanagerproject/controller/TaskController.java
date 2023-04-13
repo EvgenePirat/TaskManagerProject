@@ -8,6 +8,7 @@ import com.example.taskmanagerproject.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     @Operation(summary = "get task")
+    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public TaskDto getById(@PathVariable Long id){
         Task task = taskService.getById(id);
         return TaskMapper.changeTaskToTaskDro(task);
@@ -29,12 +31,14 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "delete task")
+    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public void deleteById(@PathVariable Long id){
         taskService.delete(id);
     }
 
     @PutMapping
     @Operation(summary = "update task")
+    @PreAuthorize("@customSecurityExpression.canAccessTask(#taskDto.id)")
     public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto taskDto){
         Task task = TaskMapper.changeFromTaskDtoToTask(taskDto);
         Task taskReturned = taskService.update(task);

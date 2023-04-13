@@ -16,4 +16,6 @@ public interface UserService {
     String savePhotoInUser(MultipartFile photo, Long id);
 
     User create(User user);
+
+    boolean isTaskOwner(Long userId, Long taskId);
 }
