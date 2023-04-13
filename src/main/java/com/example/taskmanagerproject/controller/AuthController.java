@@ -9,6 +9,8 @@ import com.example.taskmanagerproject.entity.user.User;
 
 import com.example.taskmanagerproject.service.AuthService;
 import com.example.taskmanagerproject.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Auth Controller", description = "Auth API")
 public class AuthController {
 
     private final UserService userService;
@@ -27,11 +30,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
+    @Operation(summary = "login in system")
     public JwtResponse login(@Validated @RequestBody JwtRequest loginRequest){
         return authService.login(loginRequest);
     }
 
     @PostMapping("/register")
+    @Operation(summary = "register user")
     public UserDto register(@Validated(OnCreate.class) @RequestBody UserDto userDto){
         User user = UserMapper.changeFromUserDtoToUser(userDto);
         User createUser = userService.create(user);
@@ -39,6 +44,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
+    @Operation(summary = "refresh token")
     public JwtResponse refresh(@RequestBody String refreshToken){
         return authService.refresh(refreshToken);
     }

@@ -9,6 +9,8 @@ import com.example.taskmanagerproject.entity.task.Task;
 import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.service.TaskService;
 import com.example.taskmanagerproject.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "User Controller", description = "User API")
 public class UserController {
 
     private final UserService userService;
@@ -28,28 +31,33 @@ public class UserController {
 
 
     @PutMapping("/{id}")
+    @Operation(summary = "save avatar for user")
     public String savePhotoForUser(@PathVariable Long id, @RequestParam("image") MultipartFile photo){
         return userService.savePhotoInUser(photo,id);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "delete user")
     public void deleteUser(@PathVariable Long id){
         userService.delete(id);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "get user")
     public UserDto getById(@PathVariable long id){
         User user = userService.getById(id);
         return UserMapper.changeFromUserToUserDto(user);
     }
 
     @GetMapping("/{id}/tasks")
+    @Operation(summary = "get all tasks for user")
     public List<TaskDto> getTaskByUserId(@PathVariable Long id){
         List<Task> taskList = taskService.getAllByUser(id);
         return TaskMapper.changeListTaskToTaskDro(taskList);
     }
 
     @PostMapping("/{id}/tasks")
+    @Operation(summary = "create task")
     public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto taskDto){
         Task task = TaskMapper.changeFromTaskDtoToTask(taskDto);
         Task taskCreate = taskService.create(task,id);
