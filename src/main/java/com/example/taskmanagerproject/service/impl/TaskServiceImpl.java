@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,4 +69,57 @@ public class TaskServiceImpl implements TaskService {
         tasksUserRepository.save(taskUser);
         return task;
     }
+
+    @Override
+    @Transactional
+    public Task foundTaskWithTitle(String title, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
+        return user.getUserList().stream()
+                .map(TaskUser::getId)
+                .map(TaskUserKey::getTaskId)
+                .map((id)->taskRepository.findById(id).get())
+                .filter(task -> task.getTitle().equals(title))
+                .findFirst().orElseThrow(()->new ResourcesNotFoundException("Task not found!"));
+    }
+
+    @Override
+    @Transactional
+    public List<Task> foundTasksWithStatus(String status, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
+        return user.getUserList().stream()
+                .map(TaskUser::getId)
+                .map(TaskUserKey::getTaskId)
+                .map((id)->taskRepository.findById(id).get())
+                .filter(task -> task.getStatus().equals(status))
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public List<Task> foundTasksWithLevelPriority(String level_priority, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
+        return user.getUserList().stream()
+                .map(TaskUser::getId)
+                .map(TaskUserKey::getTaskId)
+                .map((id)->taskRepository.findById(id).get())
+                .filter(task -> task.getLevelPriority().equals(level_priority))
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Task> foundTasksWithDate(String date, Long userId) {
+        String[] parts = date.split("[\\s-:]");
+        LocalDateTime localDateTimeFromUser = LocalDateTime.of(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]),Integer.parseInt(parts[2]),Integer.parseInt(parts[3]),Integer.parseInt(parts[4]));
+        User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
+        return user.getUserList().stream()
+                .map(TaskUser::getId)
+                .map(TaskUserKey::getTaskId)
+                .map((id)->taskRepository.findById(id).get())
+                .filter(task -> task.getDateFinishedTask().getDayOfYear() == localDateTimeFromUser.getDayOfYear())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
 }

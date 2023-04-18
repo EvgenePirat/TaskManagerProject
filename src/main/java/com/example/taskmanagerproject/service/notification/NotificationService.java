@@ -1,6 +1,7 @@
 package com.example.taskmanagerproject.service.notification;
 
 import com.example.taskmanagerproject.entity.task.Task;
+import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,32 @@ public class NotificationService {
 
     @Scheduled(fixedDelay = 3600000)
     @Transactional
-    public void processNotification(){
+    public void processNotificationWithHour(){
         List<Task> taskList = taskRepository.findAll();
         for (Task task : taskList) {
-            if(checkTask(task) == true){
+            if(checkTaskFor(task,"hours") == true){
                 emailSender.getDateForPostEmail(task);
             }
         }
     }
 
+    @Scheduled(cron = "0 0 0 * * ?")
     @Transactional
-    public boolean checkTask(Task task){
+    public void processNotificationWithDay(){
+        List<Task> taskList = taskRepository.findAll();
+        for (Task task : taskList) {
+            if(checkTaskFor(task,"days") == true){
+                emailSender.getDateForPostEmail(task);
+            }
+        }
+    }
+
+    public void processGreetingWithNewUser(User user){
+        emailSender.createEmailForGreeting(user);
+    }
+
+    @Transactional
+    public boolean checkTaskFor(Task task, String typeOperation){
         Duration duration = Duration.between(LocalDateTime.now(), task.getDateFinishedTask());
         if(duration.isNegative() == true){
             if(task.getStatus().equals("DONE") == false){
@@ -46,11 +62,22 @@ public class NotificationService {
                 return false;
             }
         }
-        if(task.getStatus().equals("ACTIVE") == false){
-            return false;
-        }
-        if(duration.toHours() > 1 && duration.toHours() < 5){
-            return true;
+        if(typeOperation.equals("hours")){
+            if(task.getLevelPriority().equals("LOW")){
+                if(duration.toHours() >= 1 && duration.toHours() < 3) return true;
+            }else if(task.getLevelPriority().equals("MEDIUM")) {
+                if((duration.toHours() >= 1 && duration.toHours() <= 3) || (duration.toHours() == 12)) return true;
+            }else {
+                if((duration.toHours() > 1 && duration.toHours() <= 3)||(duration.toHours()>10 && duration.toHours() < 13) || (duration.toMinutes() >= 15 && duration.toMinutes() <= 50)) return true;
+            }
+        }else {
+            if(task.getLevelPriority().equals("LOW")){
+                if(duration.toDays() == 1) return true;
+            }else if(task.getLevelPriority().equals("MEDIUM")){
+                if(duration.toDays() == 1 || duration.toDays() == 2) return true;
+            }else{
+                if(duration.toDays() >= 1 && duration.toDays() <= 3) return true;
+            }
         }
         return false;
     }

@@ -2,6 +2,7 @@ package com.example.taskmanagerproject.entity.user;
 
 import com.example.taskmanagerproject.entity.task_user.TaskUser;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.time.LocalDateTime;
