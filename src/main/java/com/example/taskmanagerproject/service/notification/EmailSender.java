@@ -31,7 +31,7 @@ public class EmailSender {
         Duration duration = Duration.between(LocalDateTime.now(), task.getDateFinishedTask());
         String emailTo = task.getUserList().stream().map(TaskUser::getUser).map(User::getUsername).findFirst().get();
         String subject = "You have not finished task "+task.getTitle();
-        String body = "You need make himself task, with name "+task.getTitle()+", because time soon finished "+task.getDateFinishedTask()+"\n You have left "+(duration.toMinutes() > 60 ? duration.toHours() : duration.toMinutes())+" hours for finished";
+        String body = "You need make himself task, with name "+task.getTitle()+", because time soon finished "+task.getDateFinishedTask()+"\n You have left "+(duration.toHours()>24 ? duration.toDays() : duration.toMinutes() > 60 ? duration.toHours() : duration.toMinutes())+" hours for finished";
         sendSimpleMessage(emailTo,subject,body);
     }
 
