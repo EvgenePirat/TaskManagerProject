@@ -1,4 +1,4 @@
-package com.example.taskmanagerproject.dto.mappers;
+package com.example.taskmanagerproject.entity.mappers;
 
 import com.example.taskmanagerproject.dto.model.TaskDto;
 import com.example.taskmanagerproject.entity.task.LevelPriority;

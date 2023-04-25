@@ -1,4 +1,4 @@
-package com.example.taskmanagerproject.dto.auth;
+package com.example.taskmanagerproject.dto.auth_model;
 
 import lombok.Data;
 

@@ -1,11 +1,11 @@
 package com.example.taskmanagerproject.controller;
 
-import com.example.taskmanagerproject.dto.mappers.TaskMapper;
-import com.example.taskmanagerproject.dto.mappers.UserMapper;
+import com.example.taskmanagerproject.entity.mappers.TaskMapper;
+import com.example.taskmanagerproject.entity.mappers.UserMapper;
 import com.example.taskmanagerproject.dto.model.TaskDto;
 import com.example.taskmanagerproject.dto.model.UserDto;
-import com.example.taskmanagerproject.dto.validation.OnCreate;
-import com.example.taskmanagerproject.dto.validation.OnUpdate;
+import com.example.taskmanagerproject.service.helper.validation.OnCreate;
+import com.example.taskmanagerproject.service.helper.validation.OnUpdate;
 import com.example.taskmanagerproject.entity.task.Task;
 import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.service.TaskService;

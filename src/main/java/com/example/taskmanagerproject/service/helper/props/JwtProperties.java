@@ -1,4 +1,4 @@
-package com.example.taskmanagerproject.service.props;
+package com.example.taskmanagerproject.service.helper.props;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

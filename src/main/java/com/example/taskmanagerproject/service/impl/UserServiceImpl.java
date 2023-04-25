@@ -6,7 +6,7 @@ import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.exception.ResourcesNotFoundException;
 import com.example.taskmanagerproject.repository.UserRepository;
 import com.example.taskmanagerproject.service.UserService;
-import com.example.taskmanagerproject.service.notification.NotificationService;
+import com.example.taskmanagerproject.service.helper.notification.GreetingNotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final NotificationService notificationService;
+    private final GreetingNotificationService greetingNotificationService;
 
     @Override
     @Transactional
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException("User already exist!");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        notificationService.processGreetingWithNewUser(user);
+        greetingNotificationService.processGreetingWithNewUser(user);
         return userRepository.save(user);
     }
 

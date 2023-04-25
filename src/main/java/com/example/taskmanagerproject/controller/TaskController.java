@@ -1,8 +1,8 @@
 package com.example.taskmanagerproject.controller;
 
-import com.example.taskmanagerproject.dto.mappers.TaskMapper;
+import com.example.taskmanagerproject.entity.mappers.TaskMapper;
 import com.example.taskmanagerproject.dto.model.TaskDto;
-import com.example.taskmanagerproject.dto.validation.OnUpdate;
+import com.example.taskmanagerproject.service.helper.validation.OnUpdate;
 import com.example.taskmanagerproject.entity.task.Task;
 import com.example.taskmanagerproject.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor

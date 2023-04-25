@@ -1,4 +1,4 @@
-package com.example.taskmanagerproject.service.notification;
+package com.example.taskmanagerproject.service.helper.notification;
 
 import com.example.taskmanagerproject.entity.task.Task;
 import com.example.taskmanagerproject.entity.task_user.TaskUser;

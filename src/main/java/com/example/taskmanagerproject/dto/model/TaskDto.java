@@ -1,10 +1,9 @@
 package com.example.taskmanagerproject.dto.model;
 
-import com.example.taskmanagerproject.dto.validation.OnCreate;
-import com.example.taskmanagerproject.dto.validation.OnUpdate;
+import com.example.taskmanagerproject.service.helper.validation.OnCreate;
+import com.example.taskmanagerproject.service.helper.validation.OnUpdate;
 import com.example.taskmanagerproject.entity.task.LevelPriority;
 import com.example.taskmanagerproject.entity.task.Status;
-import com.example.taskmanagerproject.entity.task.Task;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;

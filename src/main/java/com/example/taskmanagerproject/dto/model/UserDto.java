@@ -1,10 +1,9 @@
 package com.example.taskmanagerproject.dto.model;
 
-import com.example.taskmanagerproject.dto.validation.OnCreate;
-import com.example.taskmanagerproject.dto.validation.OnUpdate;
+import com.example.taskmanagerproject.service.helper.validation.OnCreate;
+import com.example.taskmanagerproject.service.helper.validation.OnUpdate;
 import com.example.taskmanagerproject.entity.user.Role;
 import com.example.taskmanagerproject.entity.task_user.TaskUser;
-import com.example.taskmanagerproject.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -13,7 +12,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;

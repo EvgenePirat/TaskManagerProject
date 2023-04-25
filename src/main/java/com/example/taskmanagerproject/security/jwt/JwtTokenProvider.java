@@ -1,11 +1,11 @@
 package com.example.taskmanagerproject.security.jwt;
 
-import com.example.taskmanagerproject.dto.auth.JwtResponse;
+import com.example.taskmanagerproject.dto.auth_model.JwtResponse;
 import com.example.taskmanagerproject.entity.user.Role;
 import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.exception.AccessDeniedException;
 import com.example.taskmanagerproject.service.UserService;
-import com.example.taskmanagerproject.service.props.JwtProperties;
+import com.example.taskmanagerproject.service.helper.props.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

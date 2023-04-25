@@ -1,15 +1,9 @@
-package com.example.taskmanagerproject.service.notification;
+package com.example.taskmanagerproject.service.helper.notification;
 
 import com.example.taskmanagerproject.entity.task.Task;
-import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.repository.TaskRepository;
+import com.example.taskmanagerproject.service.helper.notification.EmailSender;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +14,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class NotificationService {
+public class TimeNotificationService {
 
     private final EmailSender emailSender;
 
@@ -46,10 +40,6 @@ public class NotificationService {
                 emailSender.getDateForPostEmail(task);
             }
         }
-    }
-
-    public void processGreetingWithNewUser(User user){
-        emailSender.createEmailForGreeting(user);
     }
 
     @Transactional
@@ -81,6 +71,4 @@ public class NotificationService {
         }
         return false;
     }
-
-
 }

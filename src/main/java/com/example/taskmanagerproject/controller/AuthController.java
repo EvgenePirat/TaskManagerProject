@@ -1,10 +1,10 @@
 package com.example.taskmanagerproject.controller;
 
-import com.example.taskmanagerproject.dto.auth.JwtRequest;
-import com.example.taskmanagerproject.dto.auth.JwtResponse;
-import com.example.taskmanagerproject.dto.mappers.UserMapper;
+import com.example.taskmanagerproject.dto.auth_model.JwtRequest;
+import com.example.taskmanagerproject.dto.auth_model.JwtResponse;
+import com.example.taskmanagerproject.entity.mappers.UserMapper;
 import com.example.taskmanagerproject.dto.model.UserDto;
-import com.example.taskmanagerproject.dto.validation.OnCreate;
+import com.example.taskmanagerproject.service.helper.validation.OnCreate;
 import com.example.taskmanagerproject.entity.user.User;
 
 import com.example.taskmanagerproject.service.AuthService;

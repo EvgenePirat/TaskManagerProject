@@ -1,8 +1,7 @@
 package com.example.taskmanagerproject.service.impl;
 
-import com.example.taskmanagerproject.dto.auth.JwtRequest;
-import com.example.taskmanagerproject.dto.auth.JwtResponse;
-import com.example.taskmanagerproject.entity.user.Role;
+import com.example.taskmanagerproject.dto.auth_model.JwtRequest;
+import com.example.taskmanagerproject.dto.auth_model.JwtResponse;
 import com.example.taskmanagerproject.entity.user.User;
 import com.example.taskmanagerproject.security.jwt.JwtTokenProvider;
 import com.example.taskmanagerproject.service.AuthService;
@@ -11,9 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
