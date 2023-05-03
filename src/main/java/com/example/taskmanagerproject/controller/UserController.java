@@ -75,7 +75,7 @@ public class UserController {
 
     @PostMapping("/{id}/tasks")
     @Operation(summary = "create task")
-    @PreAuthorize("@customSecurityExpression.canAccessUser(#dto.id)")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public TaskDto createTask(@PathVariable Long id, @Validated(OnCreate.class) @RequestBody TaskDto taskDto){
         Task task = TaskMapper.changeFromTaskDtoToTask(taskDto);
         Task taskCreate = taskService.create(task,id);

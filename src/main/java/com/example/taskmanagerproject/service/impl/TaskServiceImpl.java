@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,11 +33,9 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(readOnly = true)
     public List<Task> getAllByUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
-        List<TaskUser> userList = user.getUserList();
+        Set<TaskUser> userList = user.getTaskSet();
         return userList.stream()
-                .map(TaskUser::getId)
-                .map(TaskUserKey::getTaskId)
-                .map((id)->taskRepository.findById(id).get())
+                .map(TaskUser::getTask)
                 .collect(Collectors.toList());
     }
 
@@ -74,7 +73,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task foundTaskWithTitle(String title, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
-        return user.getUserList().stream()
+        return user.getTaskSet().stream()
                 .map(TaskUser::getId)
                 .map(TaskUserKey::getTaskId)
                 .map((id)->taskRepository.findById(id).get())
@@ -86,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public List<Task> foundTasksWithStatus(String status, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
-        return user.getUserList().stream()
+        return user.getTaskSet().stream()
                 .map(TaskUser::getId)
                 .map(TaskUserKey::getTaskId)
                 .map((id)->taskRepository.findById(id).get())
@@ -99,7 +98,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public List<Task> foundTasksWithLevelPriority(String level_priority, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
-        return user.getUserList().stream()
+        return user.getTaskSet().stream()
                 .map(TaskUser::getId)
                 .map(TaskUserKey::getTaskId)
                 .map((id)->taskRepository.findById(id).get())
@@ -113,7 +112,7 @@ public class TaskServiceImpl implements TaskService {
         String[] parts = date.split("[\\s-:]");
         LocalDateTime localDateTimeFromUser = LocalDateTime.of(Integer.parseInt(parts[0]),Integer.parseInt(parts[1]),Integer.parseInt(parts[2]),Integer.parseInt(parts[3]),Integer.parseInt(parts[4]));
         User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
-        return user.getUserList().stream()
+        return user.getTaskSet().stream()
                 .map(TaskUser::getId)
                 .map(TaskUserKey::getTaskId)
                 .map((id)->taskRepository.findById(id).get())

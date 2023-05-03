@@ -31,6 +31,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User update(User user) {
+        if(user.getPassword() != null || user.getPassword().length() > 0){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 
@@ -91,6 +94,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public boolean isTaskOwner(Long userId, Long taskId) {
         User user = userRepository.findById(userId).orElseThrow(()->new ResourcesNotFoundException("User not found!"));
-        return user.getUserList().stream().map(TaskUser::getId).map(TaskUserKey::getTaskId).anyMatch((id)->id == taskId);
+        return user.getTaskSet().stream().map(TaskUser::getId).map(TaskUserKey::getTaskId).anyMatch((id)->id == taskId);
     }
 }

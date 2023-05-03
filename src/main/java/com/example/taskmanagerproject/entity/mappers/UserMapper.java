@@ -12,11 +12,11 @@ import java.nio.file.Paths;
 public class UserMapper {
 
     public static UserDto changeFromUserToUserDto(User user){
-        return new UserDto(user.getId(),user.getUsername(),user.getName(),user.getPassword(), user.getPathPhoto(), user.getUserList(),user.getRoles());
+        return new UserDto(user.getId(),user.getUsername(),user.getName(),user.getPassword(), user.getPathPhoto(), user.getTaskSet(),user.getRoles());
     }
 
     public static User changeFromUserDtoToUser(UserDto userDto){
-        return new User(userDto.getId(),userDto.getUsername(),userDto.getName(),userDto.getPassword(), userDto.getPathPhoto(), userDto.getRoles(),userDto.getUserList());
+        return new User(userDto.getId(),userDto.getUsername(),userDto.getName(),userDto.getPassword(), userDto.getPathPhoto(), userDto.getRoles(),userDto.getTaskSet());
     }
 
 }

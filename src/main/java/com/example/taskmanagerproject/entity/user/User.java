@@ -13,18 +13,6 @@ import java.util.Set;
 @Table(name = "users")
 @Data
 public class User {
-    public User() {
-    }
-
-    public User(Long id, String username, String name, String password, String pathPhoto, Set<Role> roles, List<TaskUser> userList) {
-        this.id = id;
-        this.username = username;
-        this.name = name;
-        this.password = password;
-        this.pathPhoto = pathPhoto;
-        this.roles = roles;
-        this.userList = userList;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,13 +33,26 @@ public class User {
     @Column(name = "date_create")
     private LocalDateTime timeCreateAccount;
 
+    public User() {
+    }
+
+    public User(Long id, String username, String name, String password, String pathPhoto, Set<Role> roles, Set<TaskUser> taskSet) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.pathPhoto = pathPhoto;
+        this.roles = roles;
+        this.taskSet = taskSet;
+    }
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<TaskUser> userList;
+    private Set<TaskUser> taskSet;
 
     @PrePersist
     public void initDateCreateUser() {

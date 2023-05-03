@@ -20,13 +20,13 @@ import java.util.Set;
 @Schema(description = "User DTO")
 public class UserDto {
 
-    public UserDto(Long id, String username, String name, String password, String pathPhoto, List<TaskUser> userList, Set<Role> roles) {
+    public UserDto(Long id, String username, String name, String password, String pathPhoto, Set<TaskUser> taskSet, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.password = password;
         this.pathPhoto = pathPhoto;
-        this.userList = userList;
+        this.taskSet = taskSet;
         this.roles = roles;
     }
 
@@ -54,7 +54,7 @@ public class UserDto {
     @Schema(description = "path tp photo", example = "D:/ManeProject/photo.jpg")
     private String pathPhoto;
 
-    private List<TaskUser> userList;
+    private Set<TaskUser> taskSet;
 
     @NotEmpty(message = "User can have role!", groups = OnCreate.class)
     private Set<Role> roles;
