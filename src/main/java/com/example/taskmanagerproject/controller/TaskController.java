@@ -49,7 +49,6 @@ public class TaskController {
 
     @GetMapping("/filter/with_title/{title}/{id}")
     @Operation(summary = "found task with title")
-    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public TaskDto foundTaskWithTitle(@PathVariable String title, @PathVariable Long id){
         Task task = taskService.foundTaskWithTitle(title,id);
         return TaskMapper.changeTaskToTaskDro(task);
@@ -57,7 +56,6 @@ public class TaskController {
 
     @GetMapping("/filter/with_status/{status}/{id}")
     @Operation(summary = "found tasks with status")
-    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public List<TaskDto> foundTasksWithStatus(@PathVariable String status, @PathVariable Long id){
         List<Task> taskList = taskService.foundTasksWithStatus(status,id);
         return TaskMapper.changeListTaskToTaskDro(taskList);
@@ -65,7 +63,6 @@ public class TaskController {
 
     @GetMapping("/filter/with_level_priority/{level}/{id}")
     @Operation(summary = "found tasks with level priority")
-    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public List<TaskDto> foundTasksWithLevelPriority(@PathVariable String level, @PathVariable Long id){
         List<Task> taskList = taskService.foundTasksWithLevelPriority(level,id);
         return TaskMapper.changeListTaskToTaskDro(taskList);
@@ -73,7 +70,6 @@ public class TaskController {
 
     @GetMapping("/filter/with_date/{date}/{id}")
     @Operation(summary = "found tasks with date")
-    @PreAuthorize("@customSecurityExpression.canAccessTask(#id)")
     public List<TaskDto> foundTasksWithDate(@PathVariable String date, @PathVariable Long id){
         List<Task> taskList = taskService.foundTasksWithDate(date,id);
         return TaskMapper.changeListTaskToTaskDro(taskList);

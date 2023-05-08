@@ -3,6 +3,8 @@ package com.example.taskmanagerproject.entity.task;
 import com.example.taskmanagerproject.entity.task_user.TaskUser;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,7 +44,8 @@ public class Task {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<TaskUser> userList;
 
 }
