@@ -44,7 +44,7 @@ public class Task {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<TaskUser> userList;
 

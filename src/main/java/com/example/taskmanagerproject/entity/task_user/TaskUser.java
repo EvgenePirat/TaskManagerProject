@@ -25,6 +25,7 @@ public class TaskUser {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User user;
 
     @JsonIgnore

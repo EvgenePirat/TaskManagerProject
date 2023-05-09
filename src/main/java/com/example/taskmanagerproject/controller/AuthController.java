@@ -43,6 +43,7 @@ public class AuthController {
     @PostMapping("/refresh")
     @Operation(summary = "refresh token")
     public JwtResponse refresh(@RequestBody String refreshToken){
+        System.out.println(refreshToken);
         return authService.refresh(refreshToken);
     }
 
